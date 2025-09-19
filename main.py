@@ -225,14 +225,15 @@ async def cmd_start(message: types.Message):
     gangs = load_gangs()
     mygang_number = users[user_id]["gang"]
 
-    if len(gangs[mygang_number]) != 1:
-        mygang_usernames = []
-        for i in gangs[mygang_number]:
-            mygang_usernames.append(i.split()[0])
-        mygang_usernames.remove(user_name)
-        await message.answer('Ваша команда:', reply_markup=ease_link_kb(mygang_usernames))
+    try:
+        if len(gangs[mygang_number]) != 1:
+            mygang_usernames = []
+            for i in gangs[mygang_number]:
+                mygang_usernames.append(i.split()[0])
+            mygang_usernames.remove(user_name)
+            await message.answer('Ваша команда:', reply_markup=ease_link_kb(mygang_usernames))
     
-    else:
+    except:
         await message.answer('В команде пока нет других пользователей')
 
 def ease_link_kb(mygang_usernames):
